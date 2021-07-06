@@ -2,6 +2,3 @@
 .idea
 
 # Project exclude paths
-/build/
-/build/classes/java/main/
-/build/classes/java/test/
