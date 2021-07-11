@@ -1,5 +1,7 @@
 package com.gayoung.book.springboot.web;
 
+import com.gayoung.book.springboot.config.auth.LoginUser;
+import com.gayoung.book.springboot.config.auth.dto.SessionUser;
 import com.gayoung.book.springboot.service.posts.PostsService;
 import com.gayoung.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -8,16 +10,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         /**model : 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장*/
         model.addAttribute("posts", postsService.findAllDesc());
+
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        // 메소드 파라미터로 @LoginUser 를 받기 때문에 해당 코드로 세션정보를 가져오던코드를 안써도 됨.
+        // 어느 컨트롤러에서든 @LoginUser 만 사용하면 세션 정보를 가져올 수 있게 됨.
+
+        if(user!=null){
+            model.addAttribute("userName", user.getName());
+        }
+
         return "index";
         /**머스테치 스타터 덕분에 컨트롤러에서 문자열을 반활할 떄 앞의 경로와
          * 파일의 확장자는 자동으로 지정됨.
