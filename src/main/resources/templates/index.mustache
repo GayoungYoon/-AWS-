@@ -10,6 +10,8 @@
                 {{/userName}}
                 {{^userName}}
                     <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                    <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+                <!--/oauth2/authorization/naver는 application-oauth.properties에 등록한 redirection-uri값에 맞춰 자동 등록됨.-->
                 {{/userName}}
             </div>
         </div>
